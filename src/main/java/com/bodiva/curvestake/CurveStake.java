@@ -1,3 +1,5 @@
+package com.bodiva.curvestake;
+
 import java.util.ArrayList;
 
 public class CurveStake {

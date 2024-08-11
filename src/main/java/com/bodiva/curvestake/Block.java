@@ -1,3 +1,5 @@
+package com.bodiva.curvestake;
+
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Date;

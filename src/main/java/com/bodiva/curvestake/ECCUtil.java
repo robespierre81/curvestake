@@ -1,3 +1,5 @@
+package com.bodiva.curvestake;
+
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;
 
