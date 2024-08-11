@@ -31,4 +31,17 @@
         <maven.compiler.target>18</maven.compiler.target>
         <exec.mainClass>com.bodiva.curvestake.CurveStake</exec.mainClass>
     </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.bodiva.curvestake.CurveStake</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
