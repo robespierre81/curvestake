@@ -1,17 +1,29 @@
 package com.bodiva.curvestake;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class CurveStake {
-    public static ArrayList<Block> blockchain = new ArrayList<>();
+    private static ArrayList<Block> blockchain = new ArrayList<>();
     private static ProofOfStake pos = new ProofOfStake();
 
     public static void main(String[] args) {
+        // Initialize the server-like application
+        initializeBlockchain();
+        startServer();
+    }
+
+    // Method to initialize the blockchain with some stakeholders and blocks
+    private static void initializeBlockchain() {
+        System.out.print("Init: ");
         // Create stakeholders
         Stakeholder st1 = new Stakeholder(10);
         Stakeholder st2 = new Stakeholder(20);
         Stakeholder st3 = new Stakeholder(30);
 
+        // Add stakeholders to Proof of Stake
         pos.addStakeholder(st1);
         pos.addStakeholder(st2);
         pos.addStakeholder(st3);
@@ -23,18 +35,32 @@ public class CurveStake {
         blockchain.add(new Block("Genesis block", "0", validator.getPrivateKey()));
         blockchain.add(new Block("Second block", blockchain.get(blockchain.size() - 1).hash, validator.getPrivateKey()));
         blockchain.add(new Block("Third block", blockchain.get(blockchain.size() - 1).hash, validator.getPrivateKey()));
+        
+        System.out.print(" done");
+    }
 
-        // Validate the blockchain
-        System.out.println("Blockchain is valid: " + isChainValid());
+    // Method to start the server-like loop
+    private static void startServer() {
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        // Print out the blockchain
-        for (Block block : blockchain) {
-            System.out.println("Hash: " + block.hash);
-            System.out.println("Previous Hash: " + block.previousHash);
-            System.out.println();
+        // Define the task that will run periodically
+        Runnable task = () -> {
+            // Perform blockchain maintenance or processing
+            System.out.println("Server is running. Blockchain is valid: " + isChainValid());
+        };
+
+        // Schedule the task to run every 5 seconds
+        scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.SECONDS);
+
+        // Keep the main thread alive
+        try {
+            Thread.sleep(Long.MAX_VALUE); // Sleep indefinitely
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
+    // Method to check if the blockchain is valid
     public static Boolean isChainValid() {
         Block currentBlock;
         Block previousBlock;
