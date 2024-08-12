@@ -2,7 +2,10 @@ package com.bodiva.curvestake;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Block {
     public String hash;
@@ -11,6 +14,28 @@ public class Block {
     private long timeStamp;
     private byte[] signature;
     private PublicKey publicKey;
+    private int totalGasUsed = 0;
+    private int gasLimit = 1000000; // Example limit
+    private ArrayList<Transaction> transactions = new ArrayList<>();
+    public static Map<String, TransactionOutput> UTXOs = new HashMap<>();
+    private String minerAddress;
+    private Wallet minerWallet;
+
+    public void processTransactions() {
+        for (Transaction transaction : transactions) {
+            if (transaction.processTransaction()) {
+                if (totalGasUsed + transaction.getGasLimit() <= gasLimit) {
+                    this.transactions.add(transaction);
+                    totalGasUsed += transaction.getGasLimit();
+
+                    // Reward the miner with the transaction's gas fee
+                    rewardMiner(transaction.getGasFee());
+                } else {
+                    System.out.println("Transaction exceeds block gas limit.");
+                }
+            }
+        }
+    }
 
     public Block(String data, String previousHash, PrivateKey privateKey) {
         this.data = data;
@@ -44,5 +69,10 @@ public class Block {
     
     public long getTimeStamp() {
         return timeStamp;
+    }
+    
+    private void rewardMiner(float gasFee) {
+        minerWallet.receiveFunds(gasFee);
+        System.out.println("Miner rewarded with gas fee: " + gasFee);
     }
 }
