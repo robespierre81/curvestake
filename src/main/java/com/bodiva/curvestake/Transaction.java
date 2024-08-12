@@ -116,4 +116,12 @@ public class Transaction {
     public TransactionOutput[] getOutputs() {
         return outputs;
     }
+    
+    public Map<String, TransactionOutput> getUTXOs() {
+        return UTXOs;
+    }
+    
+    public void setUTXOs(Map<String, TransactionOutput> newUTXOs) {
+        UTXOs = newUTXOs;
+    }
 }

@@ -72,7 +72,7 @@ public class NetworkNode {
         }
     }
 
-    private void processMessage(Message message) {
+    public void processMessage(Message message) {
         switch (message.getType()) {
             case "BLOCK":
                 handleBlockMessage(message.getPayload());

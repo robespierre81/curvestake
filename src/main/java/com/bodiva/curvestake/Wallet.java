@@ -100,7 +100,7 @@ public class Wallet {
     }
 
     // Update the UTXOs after a transaction
-    private void updateUTXOs(Transaction transaction) {
+    public void updateUTXOs(Transaction transaction) {
         // Remove the UTXOs that have been spent
         for (TransactionInput input : transaction.getInputs()) {
             UTXOs.remove(input.getTransactionOutputId());

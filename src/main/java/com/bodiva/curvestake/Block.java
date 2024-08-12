@@ -75,4 +75,16 @@ public class Block {
         minerWallet.receiveFunds(gasFee);
         System.out.println("Miner rewarded with gas fee: " + gasFee);
     }
+    
+    public Wallet getMinerWallet() {
+        return minerWallet;
+    }
+
+    public void setMinerWallet(Wallet minerWallet) {
+        this.minerWallet = minerWallet;
+    }
+
+    public ArrayList<Transaction> getTransactions() {
+        return this.transactions;
+    }
 }

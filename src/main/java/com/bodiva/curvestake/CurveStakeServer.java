@@ -9,11 +9,17 @@ public class CurveStakeServer {
     private ArrayList<Block> blockchain = new ArrayList<>();
     private ProofOfStake pos = new ProofOfStake();
     private NetworkNode networkNode;
+    private ScheduledExecutorService scheduler;
 
     public CurveStakeServer(int port) {
         networkNode = new NetworkNode(port);
     }
-
+    
+    public CurveStakeServer(int port, ScheduledExecutorService scheduler) {
+        networkNode = new NetworkNode(port);
+        this.scheduler = scheduler;
+    }
+    
     // Start the server
     public void start() {
         new Thread(() -> networkNode.startServer()).start();
