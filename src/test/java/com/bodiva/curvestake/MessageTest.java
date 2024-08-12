@@ -1,62 +1,71 @@
 package com.bodiva.curvestake;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MessageTest {
-    
-    public MessageTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
+
+    @Test
+    public void testMessageSerialization() {
+        // Create a sample payload
+        JSONObject payload = new JSONObject();
+        payload.put("hash", "abc123...");
+        payload.put("previousHash", "def456...");
+        payload.put("data", "Some transaction data");
+        payload.put("timestamp", 1234567890);
+        payload.put("signature", "base64-encoded-signature");
+
+        // Create a message with type "BLOCK"
+        Message message = new Message("BLOCK", payload);
+
+        // Convert the message to JSON string
+        String jsonString = message.toJson();
+
+        // Expected JSON string format
+        String expectedJsonString = "{\"type\":\"BLOCK\",\"payload\":{\"hash\":\"abc123...\",\"previousHash\":\"def456...\",\"data\":\"Some transaction data\",\"timestamp\":1234567890,\"signature\":\"base64-encoded-signature\"}}";
+
+        // Check if the serialized JSON matches the expected output
+        assertEquals(expectedJsonString, jsonString);
     }
 
     @Test
-    public void testGetType() {
-        System.out.println("getType");
-        Message instance = null;
-        String expResult = "";
-        String result = instance.getType();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    public void testMessageDeserialization() {
+        // JSON string to deserialize
+        String jsonString = "{\"type\":\"BLOCK\",\"payload\":{\"hash\":\"abc123...\",\"previousHash\":\"def456...\",\"data\":\"Some transaction data\",\"timestamp\":1234567890,\"signature\":\"base64-encoded-signature\"}}";
+
+        // Convert JSON string back to a Message object
+        Message message = Message.fromJson(jsonString);
+
+        // Check the type and payload
+        assertEquals("BLOCK", message.getType());
+        JSONObject payload = message.getPayload();
+        assertEquals("abc123...", payload.getString("hash"));
+        assertEquals("def456...", payload.getString("previousHash"));
+        assertEquals("Some transaction data", payload.getString("data"));
+        assertEquals(1234567890, payload.getLong("timestamp"));
+        assertEquals("base64-encoded-signature", payload.getString("signature"));
     }
 
     @Test
-    public void testGetPayload() {
-        System.out.println("getPayload");
-        Message instance = null;
-        JSONObject expResult = null;
-        JSONObject result = instance.getPayload();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
+    public void testMessageEquality() {
+        // Create two identical messages
+        JSONObject payload = new JSONObject();
+        payload.put("hash", "abc123...");
+        payload.put("previousHash", "def456...");
+        payload.put("data", "Some transaction data");
+        payload.put("timestamp", 1234567890);
+        payload.put("signature", "base64-encoded-signature");
 
-    @Test
-    public void testToJson() {
-        System.out.println("toJson");
-        Message instance = null;
-        String expResult = "";
-        String result = instance.toJson();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
+        Message message1 = new Message("BLOCK", payload);
+        Message message2 = new Message("BLOCK", payload);
 
-    @Test
-    public void testFromJson() {
-        System.out.println("fromJson");
-        String jsonString = "";
-        Message expResult = null;
-        Message result = Message.fromJson(jsonString);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        // Ensure that their JSON strings are equal
+        assertEquals(message1.toJson(), message2.toJson());
+
+        // Ensure that deserialized messages are also equal
+        Message deserializedMessage1 = Message.fromJson(message1.toJson());
+        Message deserializedMessage2 = Message.fromJson(message2.toJson());
+        assertEquals(deserializedMessage1.toJson(), deserializedMessage2.toJson());
     }
-    
 }

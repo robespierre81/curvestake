@@ -41,4 +41,8 @@ public class Block {
     public PublicKey getPublicKey() {
         return publicKey;
     }
+    
+    public long getTimeStamp() {
+        return timeStamp;
+    }
 }
