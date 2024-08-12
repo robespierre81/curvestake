@@ -8,10 +8,20 @@ import java.util.concurrent.TimeUnit;
 public class CurveStake {
     private static ArrayList<Block> blockchain = new ArrayList<>();
     private static ProofOfStake pos = new ProofOfStake();
+    private static NetworkNode networkNode;
 
     public static void main(String[] args) {
-        // Initialize the server-like application
+        int port = 5000; // Example port number
+        networkNode = new NetworkNode(port);
+        new Thread(() -> networkNode.startServer()).start();
+
+        // Optionally, connect to other peers (e.g., other CurveStake servers)
+        networkNode.connectToPeer("127.0.0.1", 5001); // Connect to another server
+
+        // Initialize the blockchain
         initializeBlockchain();
+        
+        // Start the server-like application
         startServer();
     }
 
@@ -47,6 +57,8 @@ public class CurveStake {
         Runnable task = () -> {
             // Perform blockchain maintenance or processing
             System.out.println("Server is running. Blockchain is valid: " + isChainValid());
+            // Broadcast the current blockchain state or a new block to peers
+            networkNode.broadcastMessage("Blockchain status: " + isChainValid());
         };
 
         // Schedule the task to run every 5 seconds
