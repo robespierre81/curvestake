@@ -3,7 +3,7 @@ package com.bodiva.curvestake.test;
 import com.bodiva.curvestake.Block;
 import com.bodiva.curvestake.ECCUtil;
 import com.bodiva.curvestake.StringUtil;
-import com.bodiva.curvestake.Transaction;
+import com.bodiva.curvestake.HookerTransaction;
 import com.bodiva.curvestake.Wallet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,11 +58,11 @@ public class BlockTest {
 
     @Test
     public void testProcessTransactions() {
-        Transaction mockTransaction = mock(Transaction.class);
+        HookerTransaction mockTransaction = mock(HookerTransaction.class);
         when(mockTransaction.processTransaction()).thenReturn(true);
         when(mockTransaction.getGasLimit()).thenReturn(21000);
         when(mockTransaction.getGasFee()).thenReturn(0.0001f);
-        ArrayList<Transaction> transactions = block.getTransactions();
+        ArrayList<HookerTransaction> transactions = block.getTransactions();
 
         block = new Block("Test Block", "previousHash", privateKey);
         block.setMinerWallet(minerWallet);
@@ -76,7 +76,7 @@ public class BlockTest {
 
     @Test
     public void testTransactionExceedsGasLimit() {
-        Transaction mockTransaction = mock(Transaction.class);
+        HookerTransaction mockTransaction = mock(HookerTransaction.class);
         when(mockTransaction.processTransaction()).thenReturn(true);
         when(mockTransaction.getGasLimit()).thenReturn(1000001); // Exceeds the gas limit
         when(mockTransaction.getGasFee()).thenReturn(0.0001f);

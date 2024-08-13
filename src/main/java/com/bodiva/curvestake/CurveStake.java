@@ -6,7 +6,12 @@ public class CurveStake {
         ConfigLoader config = new ConfigLoader("config.properties");
         int port = config.getIntProperty("port");
         CurveStakeServer server = new CurveStakeServer(port);
-
+        
+        // Deploy the Blackjack smart contract
+        BlackJackContract blackjackContract = new BlackJackContract();
+        
+        String blackjackAddress = "blackjack123";
+        server.deploySmartContract(blackjackAddress, blackjackContract);
         // Start the server
         server.start();
 

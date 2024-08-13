@@ -1,25 +1,23 @@
 package com.bodiva.curvestake;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class CurveStakeServer {
+
+    private Map<String, SmartContract> smartContracts = new HashMap<>();
     private ArrayList<Block> blockchain = new ArrayList<>();
     private ProofOfStake pos = new ProofOfStake();
     private NetworkNode networkNode;
-    private ScheduledExecutorService scheduler;
 
     public CurveStakeServer(int port) {
         networkNode = new NetworkNode(port);
     }
-    
-    public CurveStakeServer(int port, ScheduledExecutorService scheduler) {
-        networkNode = new NetworkNode(port);
-        this.scheduler = scheduler;
-    }
-    
+
     // Start the server
     public void start() {
         new Thread(() -> networkNode.startServer()).start();
@@ -30,23 +28,34 @@ public class CurveStakeServer {
         networkNode.connectToPeer(ip, port);
     }
 
+    // Deploy a smart contract
+    public void deploySmartContract(String address, SmartContract contract) {
+        smartContracts.put(address, contract);
+    }
+
+    // Execute a smart contract
+    public void executeSmartContract(String address, HookerTransaction transaction) {
+        SmartContract contract = smartContracts.get(address);
+        if (contract != null) {
+            contract.execute(transaction);
+        } else {
+            System.out.println("Smart contract not found at address: " + address);
+        }
+    }
+
     // Initialize the blockchain with some stakeholders and blocks
     public void initializeBlockchain() {
         System.out.print("Init: ");
-        // Create stakeholders
         Stakeholder st1 = new Stakeholder(10);
         Stakeholder st2 = new Stakeholder(20);
         Stakeholder st3 = new Stakeholder(30);
 
-        // Add stakeholders to Proof of Stake
         pos.addStakeholder(st1);
         pos.addStakeholder(st2);
         pos.addStakeholder(st3);
 
-        // Select the validator
         Stakeholder validator = pos.selectValidator();
 
-        // Add blocks to the blockchain
         blockchain.add(new Block("Genesis block", "0", validator.getPrivateKey()));
         blockchain.add(new Block("Second block", blockchain.get(blockchain.size() - 1).hash, validator.getPrivateKey()));
         blockchain.add(new Block("Third block", blockchain.get(blockchain.size() - 1).hash, validator.getPrivateKey()));
@@ -57,19 +66,13 @@ public class CurveStakeServer {
     // Start the server-like loop
     public void startServerLoop() {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
-        // Define the task that will run periodically
         Runnable task = () -> {
-            // Perform blockchain maintenance or processing
             System.out.println("Server is running. Blockchain is valid: " + isChainValid());
-            // Broadcast the current blockchain state or a new block to peers
             networkNode.broadcastMessage("Blockchain status: " + isChainValid());
         };
 
-        // Schedule the task to run every 5 seconds
         scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.SECONDS);
 
-        // Keep the main thread alive
         try {
             Thread.sleep(Long.MAX_VALUE); // Sleep indefinitely
         } catch (InterruptedException e) {

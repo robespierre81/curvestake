@@ -28,7 +28,7 @@ public class CurveStakeServerTest {
         mockScheduler = mock(ScheduledExecutorService.class);
 
         // Use the constructor that accepts a scheduler for testing purposes
-        curveStakeServer = new CurveStakeServer(5000, mockScheduler);
+        curveStakeServer = new CurveStakeServer(5000);
     }
 
     @Test

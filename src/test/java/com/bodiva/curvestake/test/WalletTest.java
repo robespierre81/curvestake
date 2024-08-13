@@ -4,8 +4,8 @@ import com.bodiva.curvestake.ECCUtil;
 import com.bodiva.curvestake.ECCUtil;
 import com.bodiva.curvestake.StringUtil;
 import com.bodiva.curvestake.StringUtil;
-import com.bodiva.curvestake.Transaction;
-import com.bodiva.curvestake.Transaction;
+import com.bodiva.curvestake.HookerTransaction;
+import com.bodiva.curvestake.HookerTransaction;
 import com.bodiva.curvestake.Wallet;
 import com.bodiva.curvestake.Wallet;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,7 +60,7 @@ public class WalletTest {
         float gasPrice = 0.0001f;
         float amountToSend = 30.0f;
 
-        Transaction transaction = wallet.sendFunds(recipientPublicKey, amountToSend, gasLimit, gasPrice);
+        HookerTransaction transaction = wallet.sendFunds(recipientPublicKey, amountToSend, gasLimit, gasPrice);
 
         assertNotNull(transaction, "Transaction should be created successfully.");
         assertEquals(1, wallet.getBalance(), 0.0001f, "Remaining balance should match after sending funds, accounting for the gas fee and the amount sent.");
@@ -73,7 +73,7 @@ public class WalletTest {
         float gasPrice = 0.0001f;
         float amountToSend = 10.0f;
 
-        Transaction transaction = wallet.sendFunds(recipientPublicKey, amountToSend, gasLimit, gasPrice);
+        HookerTransaction transaction = wallet.sendFunds(recipientPublicKey, amountToSend, gasLimit, gasPrice);
 
         assertNull(transaction, "Transaction should fail due to insufficient balance.");
     }
@@ -89,7 +89,7 @@ public class WalletTest {
         float gasPrice = 0.0001f;
         float amountToSend = 20.0f;
 
-        Transaction transaction = wallet.sendFunds(recipientPublicKey, amountToSend, gasLimit, gasPrice);
+        HookerTransaction transaction = wallet.sendFunds(recipientPublicKey, amountToSend, gasLimit, gasPrice);
         assertNotNull(transaction, "Transaction should be created successfully.");
 
         // Manually call the updateUTXOs method to simulate updating after the transaction

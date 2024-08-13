@@ -4,8 +4,8 @@ import com.bodiva.curvestake.ECCUtil;
 import com.bodiva.curvestake.ECCUtil;
 import com.bodiva.curvestake.StringUtil;
 import com.bodiva.curvestake.StringUtil;
-import com.bodiva.curvestake.Transaction;
-import com.bodiva.curvestake.Transaction;
+import com.bodiva.curvestake.HookerTransaction;
+import com.bodiva.curvestake.HookerTransaction;
 import com.bodiva.curvestake.TransactionInput;
 import com.bodiva.curvestake.TransactionInput;
 import com.bodiva.curvestake.TransactionOutput;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TransactionTest {
 
-    private Transaction transaction;
+    private HookerTransaction transaction;
     private KeyPair keyPair;
     private TransactionInput[] inputs;
 
@@ -37,8 +37,8 @@ public class TransactionTest {
                 new TransactionInput("previousTxOutputId2")
         };
 
-        // Create a Transaction object for testing
-        transaction = new Transaction(keyPair.getPublic(), keyPair.getPublic(), 10.0f, 21000, 0.0001f, inputs);
+        // Create a HookerTransaction object for testing
+        transaction = new HookerTransaction(keyPair.getPublic(), keyPair.getPublic(), 10.0f, 21000, 0.0001f, inputs);
     }
 
     @Test

@@ -37,7 +37,7 @@ public class Wallet {
     }
 
     // Generate a new transaction
-    public Transaction sendFunds(PublicKey recipient, float value, int gasLimit, float gasPrice) {
+    public HookerTransaction sendFunds(PublicKey recipient, float value, int gasLimit, float gasPrice) {
         float totalCost = value + (gasLimit * gasPrice);
         float balance = getBalance();
         if (balance < totalCost) {
@@ -58,7 +58,7 @@ public class Wallet {
             }
         }
 
-        Transaction transaction = new Transaction(publicKey, recipient, value, gasLimit, gasPrice, inputs.toArray(new TransactionInput[inputs.size()]));
+        HookerTransaction transaction = new HookerTransaction(publicKey, recipient, value, gasLimit, gasPrice, inputs.toArray(new TransactionInput[inputs.size()]));
         transaction.generateSignature(privateKey);
 
         // Remove UTXOs that are spent
@@ -100,7 +100,7 @@ public class Wallet {
     }
 
     // Update the UTXOs after a transaction
-    public void updateUTXOs(Transaction transaction) {
+    public void updateUTXOs(HookerTransaction transaction) {
         // Remove the UTXOs that have been spent
         for (TransactionInput input : transaction.getInputs()) {
             UTXOs.remove(input.getTransactionOutputId());

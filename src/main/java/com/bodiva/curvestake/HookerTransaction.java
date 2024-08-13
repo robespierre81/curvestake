@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Transaction {
+public class HookerTransaction {
     private String transactionId; // Hash of the transaction
     private PublicKey sender; // Sender's public key
     private PublicKey recipient; // Recipient's public key
@@ -18,9 +18,11 @@ public class Transaction {
 
     private TransactionInput[] inputs; // Inputs to this transaction
     private TransactionOutput[] outputs; // Outputs to this transaction
+    private String function; // Function name for smart contract
+    private String[] args; // Arguments for the function
 
     // Constructor
-    public Transaction(PublicKey sender, PublicKey recipient, float value, int gasLimit, float gasPrice, TransactionInput[] inputs) {
+    public HookerTransaction(PublicKey sender, PublicKey recipient, float value, int gasLimit, float gasPrice, TransactionInput[] inputs) {
         this.sender = sender;
         this.recipient = recipient;
         this.value = value;
@@ -123,5 +125,25 @@ public class Transaction {
     
     public void setUTXOs(Map<String, TransactionOutput> newUTXOs) {
         UTXOs = newUTXOs;
+    }
+    
+    public String getFunction() {
+        return function;
+    }
+
+    public void setFunction(String function) {
+        this.function = function;
+    }
+
+    public String[] getArgs() {
+        return args;
+    }
+
+    public void setArgs(String[] args) {
+        this.args = args;
+    }
+    
+    public PublicKey getSender() {
+        return sender;
     }
 }
