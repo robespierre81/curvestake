@@ -1,6 +1,8 @@
 package com.bodiva.curvestake.test;
 
 import com.bodiva.curvestake.CurveStakeServer;
+import com.bodiva.curvestake.CurveStakeServer;
+import com.bodiva.curvestake.NetworkNode;
 import com.bodiva.curvestake.NetworkNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

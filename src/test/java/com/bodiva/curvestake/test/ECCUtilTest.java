@@ -1,6 +1,7 @@
 package com.bodiva.curvestake.test;
 
 import com.bodiva.curvestake.ECCUtil;
+import com.bodiva.curvestake.ECCUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

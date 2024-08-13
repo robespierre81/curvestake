@@ -1,6 +1,7 @@
 package com.bodiva.curvestake.test;
 
 import com.bodiva.curvestake.StringUtil;
+import com.bodiva.curvestake.StringUtil;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

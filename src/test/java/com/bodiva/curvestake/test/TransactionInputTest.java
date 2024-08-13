@@ -1,7 +1,10 @@
 package com.bodiva.curvestake.test;
 
 import com.bodiva.curvestake.ECCUtil;
+import com.bodiva.curvestake.ECCUtil;
 import com.bodiva.curvestake.TransactionInput;
+import com.bodiva.curvestake.TransactionInput;
+import com.bodiva.curvestake.TransactionOutput;
 import com.bodiva.curvestake.TransactionOutput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

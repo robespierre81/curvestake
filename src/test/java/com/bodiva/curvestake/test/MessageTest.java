@@ -1,6 +1,7 @@
 package com.bodiva.curvestake.test;
 
 import com.bodiva.curvestake.Message;
+import com.bodiva.curvestake.Message;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
