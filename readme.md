@@ -31,8 +31,8 @@ CurveStake is a proof-of-stake (PoS) blockchain built with Java, featuring smart
 1. **Clone the Repository:**
 
 ```bash
-   git clone https://github.com/yourusername/curvestake.git
-   cd curvestake
+git clone https://github.com/yourusername/curvestake.git
+cd curvestake
 ```
 
 2. **Build the Project:**
@@ -51,31 +51,35 @@ Ensure your config.properties file is correctly set up in the src/main/resources
 port=5000
 ```
 
-3. **Usage**
-Running the Blockchain
+4. **Usage**
+
+*Running the Blockchain*
+
 Start the CurveStake Server:
 
 Run the CurveStakeServer to start your blockchain:
 
-bash
-Copy code
+```bash
 java -cp target/your-app.jar com.bodiva.curvestake.Main
+```
+
 Deploy and Interact with Smart Contracts:
 
 You can deploy and interact with the BlackjackContract through your blockchain. The Main class in the project demonstrates how to deploy the contract and start playing:
 
-bash
-Copy code
+```bash
 java -cp target/your-app.jar com.bodiva.curvestake.BlackjackInteraction
+```
+
 Smart Contract: Blackjack
 The BlackjackContract is a smart contract on the CurveStake blockchain that allows players to engage in a game of Blackjack. Players can:
 
 Place Bets: Stake tokens to start a game.
 Hit: Draw additional cards in the game.
 Stand: End your turn and see if you can beat the dealer.
-Example:
-java
-Copy code
+
+*Example:*
+```java
 // Create a player wallet and fund it
 Wallet playerWallet = new Wallet();
 blackjackContract.addFunds(playerWallet.getPublicKey(), 100);
@@ -85,18 +89,24 @@ Transaction betTransaction = new Transaction(playerWallet.getPublicKey(), null, 
 betTransaction.setFunction("placeBet");
 betTransaction.setArgs(new String[]{"10"});
 server.executeSmartContract(blackjackAddress, betTransaction);
-Configuration
+```
+
+*Configuration*
 The blockchain parameters, such as port numbers, are stored in the config.properties file located in the src/main/resources directory. You can modify this file to suit your needs.
 
 Sample config.properties:
-properties
-Copy code
+
+```properties
 port=5000
+```
+
 This file can be externalized and loaded from outside the JAR file to allow runtime configuration changes.
 
-Contributing
+5. **Contributing**
+
 Contributions are welcome! Please fork the repository and submit a pull request with your changes. Ensure your code follows the existing coding style and includes appropriate tests.
 
-License
+6. **License**
+
 This project is licensed under the MIT License - see the LICENSE file for details.
 
