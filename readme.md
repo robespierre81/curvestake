@@ -102,11 +102,11 @@ port=5000
 
 This file can be externalized and loaded from outside the JAR file to allow runtime configuration changes.
 
-5. **Contributing**
+## Contributing
 
 Contributions are welcome! Please fork the repository and submit a pull request with your changes. Ensure your code follows the existing coding style and includes appropriate tests.
 
-6. **License**
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
