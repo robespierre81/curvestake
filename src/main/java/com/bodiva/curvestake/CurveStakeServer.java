@@ -13,6 +13,7 @@ public class CurveStakeServer {
     private ArrayList<Block> blockchain = new ArrayList<>();
     private ProofOfStake pos = new ProofOfStake();
     private NetworkNode networkNode;
+    private ScheduledExecutorService scheduler;
 
     public CurveStakeServer(int port) {
         networkNode = new NetworkNode(port);
@@ -22,6 +23,33 @@ public class CurveStakeServer {
     public void start() {
         new Thread(() -> networkNode.startServer()).start();
     }
+    
+    public void startServerLoop() {
+        scheduler = Executors.newScheduledThreadPool(1);
+        Runnable task = () -> {
+            System.out.println("Server is running. Blockchain is valid: " + isChainValid());
+            networkNode.broadcastMessage("Blockchain status: " + isChainValid());
+        };
+
+        scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.SECONDS);
+    }
+    
+    // Method to stop the server
+    public void stop() {
+        if (scheduler != null) {
+            scheduler.shutdown();  // Stops the scheduler
+            try {
+                if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
+                    scheduler.shutdownNow();  // Forcefully stop if not terminated within the time limit
+                }
+            } catch (InterruptedException e) {
+                scheduler.shutdownNow();
+            }
+        }
+        networkNode.stopServer();  // Stops the network node
+        System.out.println("Server stopped.");
+    }
+
 
     // Connect to another peer
     public void connectToPeer(String ip, int port) {
@@ -61,23 +89,6 @@ public class CurveStakeServer {
         blockchain.add(new Block("Third block", blockchain.get(blockchain.size() - 1).hash, validator.getPrivateKey()));
 
         System.out.println(" done");
-    }
-
-    // Start the server-like loop
-    public void startServerLoop() {
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        Runnable task = () -> {
-            System.out.println("Server is running. Blockchain is valid: " + isChainValid());
-            networkNode.broadcastMessage("Blockchain status: " + isChainValid());
-        };
-
-        scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.SECONDS);
-
-        try {
-            Thread.sleep(Long.MAX_VALUE); // Sleep indefinitely
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     // Check if the blockchain is valid

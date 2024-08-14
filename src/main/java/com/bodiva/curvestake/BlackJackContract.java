@@ -111,4 +111,8 @@ public class BlackJackContract implements SmartContract {
     public void addFunds(PublicKey player, int amount) {
         playerBalances.put(player, playerBalances.getOrDefault(player, 0) + amount);
     }
+    
+    public int getBalance(PublicKey playerKey) {
+        return playerBalances.get(playerKey);
+    }
 }
