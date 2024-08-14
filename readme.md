@@ -30,25 +30,26 @@ CurveStake is a proof-of-stake (PoS) blockchain built with Java, featuring smart
 
 1. **Clone the Repository:**
 
-   ```bash
+```bash
    git clone https://github.com/yourusername/curvestake.git
    cd curvestake
-    ```
+```
 
 2. **Build the Project:**
 
 Use Maven to compile the project:
 
-    ```bash
-    mvn clean install
-    ```
+```bash
+mvn clean install
+```
 
 3. **Configure the Blockchain:**
 
 Ensure your config.properties file is correctly set up in the src/main/resources directory. This file should include configuration like the port number:
 
-    ```properties
-    port=5000
+```properties
+port=5000
+```
 
 3. **Usage**
 Running the Blockchain
