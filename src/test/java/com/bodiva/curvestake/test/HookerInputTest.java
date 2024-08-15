@@ -1,29 +1,26 @@
 package com.bodiva.curvestake.test;
 
 import com.bodiva.curvestake.ECCUtil;
-import com.bodiva.curvestake.ECCUtil;
-import com.bodiva.curvestake.TransactionInput;
-import com.bodiva.curvestake.TransactionInput;
-import com.bodiva.curvestake.TransactionOutput;
-import com.bodiva.curvestake.TransactionOutput;
+import com.bodiva.curvestake.HookerInput;
+import com.bodiva.curvestake.HookerOutput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TransactionInputTest {
+public class HookerInputTest {
 
-    private TransactionInput transactionInput;
+    private HookerInput transactionInput;
     private String transactionOutputId;
-    private TransactionOutput mockUTXO;
+    private HookerOutput mockUTXO;
 
     @BeforeEach
     public void setUp() {
         transactionOutputId = "testOutputId";
-        transactionInput = new TransactionInput(transactionOutputId);
+        transactionInput = new HookerInput(transactionOutputId);
 
-        // Mock a TransactionOutput for testing purposes
-        mockUTXO = new TransactionOutput(ECCUtil.generateKeyPair().getPublic(), 10.0f, "mockTransactionId");
+        // Mock a HookerOutput for testing purposes
+        mockUTXO = new HookerOutput(ECCUtil.generateKeyPair().getPublic(), 10.0f, "mockTransactionId");
     }
 
     @Test

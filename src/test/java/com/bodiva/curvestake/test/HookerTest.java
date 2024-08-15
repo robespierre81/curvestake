@@ -4,12 +4,12 @@ import com.bodiva.curvestake.ECCUtil;
 import com.bodiva.curvestake.ECCUtil;
 import com.bodiva.curvestake.StringUtil;
 import com.bodiva.curvestake.StringUtil;
-import com.bodiva.curvestake.HookerTransaction;
-import com.bodiva.curvestake.HookerTransaction;
-import com.bodiva.curvestake.TransactionInput;
-import com.bodiva.curvestake.TransactionInput;
-import com.bodiva.curvestake.TransactionOutput;
-import com.bodiva.curvestake.TransactionOutput;
+import com.bodiva.curvestake.Hooker;
+import com.bodiva.curvestake.Hooker;
+import com.bodiva.curvestake.HookerInput;
+import com.bodiva.curvestake.HookerInput;
+import com.bodiva.curvestake.HookerOutput;
+import com.bodiva.curvestake.HookerOutput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,11 +20,11 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TransactionTest {
+public class HookerTest {
 
-    private HookerTransaction transaction;
+    private Hooker transaction;
     private KeyPair keyPair;
-    private TransactionInput[] inputs;
+    private HookerInput[] inputs;
 
     @BeforeEach
     public void setUp() {
@@ -32,13 +32,13 @@ public class TransactionTest {
         keyPair = ECCUtil.generateKeyPair();
 
         // Mock transaction inputs
-        inputs = new TransactionInput[]{
-                new TransactionInput("previousTxOutputId1"),
-                new TransactionInput("previousTxOutputId2")
+        inputs = new HookerInput[]{
+                new HookerInput("previousTxOutputId1"),
+                new HookerInput("previousTxOutputId2")
         };
 
-        // Create a HookerTransaction object for testing
-        transaction = new HookerTransaction(keyPair.getPublic(), keyPair.getPublic(), 10.0f, 21000, 0.0001f, inputs);
+        // Create a Hooker object for testing
+        transaction = new Hooker(keyPair.getPublic(), keyPair.getPublic(), 10.0f, 21000, 0.0001f, inputs);
     }
 
     @Test
@@ -75,11 +75,11 @@ public class TransactionTest {
     @Test
     public void testProcessTransactionWithValidSignature() {
         // Mock the transaction outputs for inputs
-        TransactionOutput output1 = new TransactionOutput(keyPair.getPublic(), 5.0f, "output1");
-        TransactionOutput output2 = new TransactionOutput(keyPair.getPublic(), 10.0f, "output2");
+        HookerOutput output1 = new HookerOutput(keyPair.getPublic(), 5.0f, "output1");
+        HookerOutput output2 = new HookerOutput(keyPair.getPublic(), 10.0f, "output2");
 
         // Set the UTXO map to return the outputs for the inputs
-        Map<String, TransactionOutput> utxoMap = new HashMap<>();
+        Map<String, HookerOutput> utxoMap = new HashMap<>();
         utxoMap.put("previousTxOutputId1", output1);
         utxoMap.put("previousTxOutputId2", output2);
         transaction.setUTXOs(utxoMap);
@@ -102,11 +102,11 @@ public class TransactionTest {
     @Test
     public void testProcessTransactionWithInsufficientFunds() {
         // Mock the transaction outputs for inputs with insufficient funds
-        TransactionOutput output1 = new TransactionOutput(keyPair.getPublic(), 5.0f, "output1");
-        TransactionOutput output2 = new TransactionOutput(keyPair.getPublic(), 4.0f, "output2");
+        HookerOutput output1 = new HookerOutput(keyPair.getPublic(), 5.0f, "output1");
+        HookerOutput output2 = new HookerOutput(keyPair.getPublic(), 4.0f, "output2");
 
         // Set the UTXO map to return the outputs for the inputs
-        Map<String, TransactionOutput> utxoMap = new HashMap<>();
+        Map<String, HookerOutput> utxoMap = new HashMap<>();
         utxoMap.put("previousTxOutputId1", output1);
         utxoMap.put("previousTxOutputId2", output2);
         transaction.setUTXOs(utxoMap);

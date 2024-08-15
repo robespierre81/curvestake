@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HookerTransaction {
+public class Hooker {
     private String transactionId; // Hash of the transaction
     private PublicKey sender; // Sender's public key
     private PublicKey recipient; // Recipient's public key
@@ -14,22 +14,22 @@ public class HookerTransaction {
     private byte[] signature; // Signature to prevent tampering
     private float gasPrice; // Price per gas unit
     private int gasLimit; // Maximum amount of gas the sender is willing to pay
-    private Map<String, TransactionOutput> UTXOs = new HashMap<>(); // Unspent transaction outputs
+    private Map<String, HookerOutput> UTXOs = new HashMap<>(); // Unspent transaction outputs
 
-    private TransactionInput[] inputs; // Inputs to this transaction
-    private TransactionOutput[] outputs; // Outputs to this transaction
+    private HookerInput[] inputs; // Inputs to this transaction
+    private HookerOutput[] outputs; // Outputs to this transaction
     private String function; // Function name for smart contract
     private String[] args; // Arguments for the function
 
     // Constructor
-    public HookerTransaction(PublicKey sender, PublicKey recipient, float value, int gasLimit, float gasPrice, TransactionInput[] inputs) {
+    public Hooker(PublicKey sender, PublicKey recipient, float value, int gasLimit, float gasPrice, HookerInput[] inputs) {
         this.sender = sender;
         this.recipient = recipient;
         this.value = value;
         this.gasLimit = gasLimit;
         this.gasPrice = gasPrice;
         this.inputs = inputs;
-        this.outputs = new TransactionOutput[1]; // Simplified for brevity
+        this.outputs = new HookerOutput[1]; // Simplified for brevity
     }
 
     // Generate the transaction's signature
@@ -65,7 +65,7 @@ public class HookerTransaction {
         }
 
         // Gather inputs and ensure they are unspent
-        for (TransactionInput input : inputs) {
+        for (HookerInput input : inputs) {
             input.setUTXO(UTXOs.get(input.getTransactionOutputId()));
         }
 
@@ -78,18 +78,18 @@ public class HookerTransaction {
         // Generate transaction outputs
         float leftover = getInputsValue() - value;
         transactionId = calculateHash();
-        outputs = new TransactionOutput[]{
-                new TransactionOutput(this.recipient, value, transactionId),
-                new TransactionOutput(this.sender, leftover, transactionId)
+        outputs = new HookerOutput[]{
+                new HookerOutput(this.recipient, value, transactionId),
+                new HookerOutput(this.sender, leftover, transactionId)
         };
 
         // Add outputs to the UTXO map
-        for (TransactionOutput output : outputs) {
+        for (HookerOutput output : outputs) {
             UTXOs.put(output.getId(), output);
         }
 
         // Remove spent inputs from the UTXO map
-        for (TransactionInput input : inputs) {
+        for (HookerInput input : inputs) {
             if (input.getUTXO() != null) {
                 UTXOs.remove(input.getUTXO().getId());
             }
@@ -101,7 +101,7 @@ public class HookerTransaction {
     // Returns the sum of the input values (UTXOs) used in this transaction
     public float getInputsValue() {
         float total = 0;
-        for (TransactionInput input : inputs) {
+        for (HookerInput input : inputs) {
             if (input.getUTXO() != null) {
                 total += input.getUTXO().getValue();
             }
@@ -110,20 +110,20 @@ public class HookerTransaction {
     }
 
     // Get the inputs of the transaction
-    public TransactionInput[] getInputs() {
+    public HookerInput[] getInputs() {
         return inputs;
     }
 
     // Get the outputs of the transaction
-    public TransactionOutput[] getOutputs() {
+    public HookerOutput[] getOutputs() {
         return outputs;
     }
     
-    public Map<String, TransactionOutput> getUTXOs() {
+    public Map<String, HookerOutput> getUTXOs() {
         return UTXOs;
     }
     
-    public void setUTXOs(Map<String, TransactionOutput> newUTXOs) {
+    public void setUTXOs(Map<String, HookerOutput> newUTXOs) {
         UTXOs = newUTXOs;
     }
     

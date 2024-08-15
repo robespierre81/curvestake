@@ -2,13 +2,13 @@ package com.bodiva.curvestake;
 
 import java.security.PublicKey;
 
-public class TransactionOutput {
+public class HookerOutput {
     private String id;
     private PublicKey recipient; // The owner of this output
     private float value; // The amount of coins
     private String parentTransactionId; // The transaction that created this output
 
-    public TransactionOutput(PublicKey recipient, float value, String parentTransactionId) {
+    public HookerOutput(PublicKey recipient, float value, String parentTransactionId) {
         this.recipient = recipient;
         this.value = value;
         this.parentTransactionId = parentTransactionId;

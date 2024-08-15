@@ -62,7 +62,7 @@ public class CurveStakeServer {
     }
 
     // Execute a smart contract
-    public void executeSmartContract(String address, HookerTransaction transaction) {
+    public void executeSmartContract(String address, Hooker transaction) {
         SmartContract contract = smartContracts.get(address);
         if (contract != null) {
             contract.execute(transaction);

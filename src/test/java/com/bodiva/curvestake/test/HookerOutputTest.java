@@ -4,8 +4,8 @@ import com.bodiva.curvestake.ECCUtil;
 import com.bodiva.curvestake.ECCUtil;
 import com.bodiva.curvestake.StringUtil;
 import com.bodiva.curvestake.StringUtil;
-import com.bodiva.curvestake.TransactionOutput;
-import com.bodiva.curvestake.TransactionOutput;
+import com.bodiva.curvestake.HookerOutput;
+import com.bodiva.curvestake.HookerOutput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +13,9 @@ import java.security.KeyPair;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TransactionOutputTest {
+public class HookerOutputTest {
 
-    private TransactionOutput transactionOutput;
+    private HookerOutput transactionOutput;
     private KeyPair keyPair;
     private String parentTransactionId;
     private float value;
@@ -27,8 +27,8 @@ public class TransactionOutputTest {
         parentTransactionId = "parentTransaction123";
         value = 50.0f;
 
-        // Create a TransactionOutput object for testing
-        transactionOutput = new TransactionOutput(keyPair.getPublic(), value, parentTransactionId);
+        // Create a HookerOutput object for testing
+        transactionOutput = new HookerOutput(keyPair.getPublic(), value, parentTransactionId);
     }
 
     @Test

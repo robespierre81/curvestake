@@ -16,13 +16,13 @@ public class Block {
     private PublicKey publicKey;
     private int totalGasUsed = 0;
     private int gasLimit = 1000000; // Example limit
-    private ArrayList<HookerTransaction> transactions = new ArrayList<>();
-    public static Map<String, TransactionOutput> UTXOs = new HashMap<>();
+    private ArrayList<Hooker> transactions = new ArrayList<>();
+    public static Map<String, HookerOutput> UTXOs = new HashMap<>();
     private String minerAddress;
     private Wallet minerWallet;
 
     public void processTransactions() {
-        for (HookerTransaction transaction : transactions) {
+        for (Hooker transaction : transactions) {
             if (transaction.processTransaction()) {
                 if (totalGasUsed + transaction.getGasLimit() <= gasLimit) {
                     this.transactions.add(transaction);
@@ -84,7 +84,7 @@ public class Block {
         this.minerWallet = minerWallet;
     }
 
-    public ArrayList<HookerTransaction> getTransactions() {
+    public ArrayList<Hooker> getTransactions() {
         return this.transactions;
     }
 }

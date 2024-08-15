@@ -11,7 +11,7 @@ public class BlackJackContract implements SmartContract {
     private int betAmount;
 
     @Override
-    public void execute(HookerTransaction transaction) {
+    public void execute(Hooker transaction) {
         String function = transaction.getFunction();
         PublicKey player = transaction.getSender();
 

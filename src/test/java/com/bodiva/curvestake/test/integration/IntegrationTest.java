@@ -2,8 +2,8 @@ package com.bodiva.curvestake.test.integration;
 
 import com.bodiva.curvestake.BlackJackContract;
 import com.bodiva.curvestake.CurveStakeServer;
-import com.bodiva.curvestake.HookerTransaction;
-import com.bodiva.curvestake.TransactionInput;
+import com.bodiva.curvestake.Hooker;
+import com.bodiva.curvestake.HookerInput;
 import com.bodiva.curvestake.Wallet;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,18 +67,18 @@ public class IntegrationTest {
             CurveStakeServer server = servers.get(i);
 
             // Place a bet
-            HookerTransaction betHookerTransaction = new HookerTransaction(wallet.getPublicKey(), null, 0, 0, 0, new TransactionInput[0]);
+            Hooker betHookerTransaction = new Hooker(wallet.getPublicKey(), null, 0, 0, 0, new HookerInput[0]);
             betHookerTransaction.setFunction("placeBet");
             betHookerTransaction.setArgs(new String[]{"10"});
             server.executeSmartContract(blackjackAddress, betHookerTransaction);
 
             // Player chooses to hit
-            HookerTransaction hitHookerTransaction = new HookerTransaction(wallet.getPublicKey(), null, 0, 0, 0, new TransactionInput[0]);
+            Hooker hitHookerTransaction = new Hooker(wallet.getPublicKey(), null, 0, 0, 0, new HookerInput[0]);
             hitHookerTransaction.setFunction("hit");
             server.executeSmartContract(blackjackAddress, hitHookerTransaction);
 
             // Player decides to stand
-            HookerTransaction standHookerTransaction = new HookerTransaction(wallet.getPublicKey(), null, 0, 0, 0, new TransactionInput[0]);
+            Hooker standHookerTransaction = new Hooker(wallet.getPublicKey(), null, 0, 0, 0, new HookerInput[0]);
             standHookerTransaction.setFunction("stand");
             server.executeSmartContract(blackjackAddress, standHookerTransaction);
 

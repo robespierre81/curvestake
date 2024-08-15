@@ -1,5 +1,5 @@
 package com.bodiva.curvestake;
 
 public interface SmartContract {
-    void execute(HookerTransaction transaction);
+    void execute(Hooker transaction);
 }
