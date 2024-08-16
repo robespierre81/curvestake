@@ -14,9 +14,33 @@ public class CurveStakeServer {
     private ProofOfStake pos = new ProofOfStake();
     private NetworkNode networkNode;
     private ScheduledExecutorService scheduler;
+    private BlackJackLoader contractLoader;
 
     public CurveStakeServer(int port) {
         networkNode = new NetworkNode(port);
+    }
+
+    public CurveStakeServer(String providerUrl, String contractAddress, String ownerAddress) {
+        // Initialize the contract loader to interact with the smart contract
+        this.contractLoader = new BlackJackLoader(providerUrl, contractAddress, ownerAddress);
+    }
+
+    public void interactWithSmartContract(String newMessage) {
+        try {
+            // Get the current message from the smart contract
+            String currentMessage = contractLoader.getMessage();
+            System.out.println("Current message from smart contract: " + currentMessage);
+
+            // Set a new message in the smart contract
+            contractLoader.setMessage(newMessage);
+            System.out.println("New message set in smart contract: " + newMessage);
+
+            // Retrieve the updated message from the smart contract
+            String updatedMessage = contractLoader.getMessage();
+            System.out.println("Updated message from smart contract: " + updatedMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Start the server

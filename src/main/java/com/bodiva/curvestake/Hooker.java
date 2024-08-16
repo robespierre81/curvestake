@@ -5,6 +5,7 @@ import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class Hooker {
     private String transactionId; // Hash of the transaction
@@ -145,5 +146,30 @@ public class Hooker {
     
     public PublicKey getSender() {
         return sender;
+    }
+    
+    // Method to simulate sending the transaction to the smart contract
+    public CompletableFuture<HookerReceipt> send() {
+        // Simulate sending the transaction and getting a receipt
+        String hash = "0x123456789abcdef"; // Example hash
+        boolean success = true; // Example success status
+
+        HookerReceipt receipt = new HookerReceipt(hash, success);
+        return CompletableFuture.completedFuture(receipt);
+    }
+
+    // Example methods to simulate getting and setting messages in the contract
+    public CompletableFuture<String> getMessage() {
+        // Simulate retrieving the message from the contract
+        return CompletableFuture.completedFuture("Hello, CurveStake!");
+    }
+
+    public CompletableFuture<HookerReceipt> setMessage(String newMessage) {
+        // Simulate setting the message in the contract and returning a receipt
+        String hash = "0xabcdef123456789"; // Example hash
+        boolean success = true; // Example success status
+
+        HookerReceipt receipt = new HookerReceipt(hash, success);
+        return CompletableFuture.completedFuture(receipt);
     }
 }
