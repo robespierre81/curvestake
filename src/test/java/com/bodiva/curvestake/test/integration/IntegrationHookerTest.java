@@ -1,9 +1,9 @@
 package com.bodiva.curvestake.test.integration;
 
-import com.bodiva.curvestake.BlackJackContract;
+import com.bodiva.curvestake.smartcontract.BlackJackContract;
 import com.bodiva.curvestake.CurveStakeServer;
-import com.bodiva.curvestake.Hooker;
-import com.bodiva.curvestake.HookerInput;
+import com.bodiva.curvestake.blockchain.Hooker;
+import com.bodiva.curvestake.blockchain.HookerInput;
 import com.bodiva.curvestake.Wallet;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

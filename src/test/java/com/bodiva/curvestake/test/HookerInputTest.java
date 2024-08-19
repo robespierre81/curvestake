@@ -1,8 +1,8 @@
 package com.bodiva.curvestake.test;
 
 import com.bodiva.curvestake.ECCUtil;
-import com.bodiva.curvestake.HookerInput;
-import com.bodiva.curvestake.HookerOutput;
+import com.bodiva.curvestake.blockchain.HookerInput;
+import com.bodiva.curvestake.blockchain.HookerOutput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

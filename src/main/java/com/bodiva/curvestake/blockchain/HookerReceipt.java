@@ -1,4 +1,4 @@
-package com.bodiva.curvestake;
+package com.bodiva.curvestake.blockchain;
 
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 

@@ -1,4 +1,4 @@
-package com.bodiva.curvestake;
+package com.bodiva.curvestake.blockchain;
 
 public class HookerInput {
     private String transactionOutputId; // Reference to HookerOutput -> transactionId

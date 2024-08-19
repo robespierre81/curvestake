@@ -1,5 +1,12 @@
 package com.bodiva.curvestake;
 
+import com.bodiva.curvestake.consensus.Stakeholder;
+import com.bodiva.curvestake.blockchain.Hooker;
+import com.bodiva.curvestake.consensus.ProofOfStake;
+import com.bodiva.curvestake.blockchain.Block;
+import com.bodiva.curvestake.cvm.CVM;
+import com.bodiva.curvestake.cvm.StateManager;
+import com.bodiva.curvestake.cvm.SecurityManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +22,18 @@ public class CurveStakeServer {
     private NetworkNode networkNode;
     private ScheduledExecutorService scheduler;
     private BlackJackLoader contractLoader;
+    
+    private CVM cvm;
+    private ProofOfStake proofOfStake;
+
+    public CurveStakeServer() {
+        this.proofOfStake = new ProofOfStake();
+        this.cvm = new CVM(new StateManager(), new SecurityManager(), proofOfStake);
+    }
+
+    public void processBlock(Block block) {
+        cvm.validateAndExecuteBlock(block);
+    }
 
     public CurveStakeServer(int port) {
         networkNode = new NetworkNode(port);

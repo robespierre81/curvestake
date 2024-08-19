@@ -1,5 +1,8 @@
-package com.bodiva.curvestake;
+package com.bodiva.curvestake.blockchain;
 
+import com.bodiva.curvestake.ECCUtil;
+import com.bodiva.curvestake.StringUtil;
+import com.bodiva.curvestake.Wallet;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;

@@ -1,5 +1,8 @@
 package com.bodiva.curvestake;
 
+import com.bodiva.curvestake.blockchain.Hooker;
+import com.bodiva.curvestake.blockchain.HookerInput;
+import com.bodiva.curvestake.blockchain.HookerOutput;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -58,7 +61,7 @@ public class Wallet {
             }
         }
 
-        Hooker transaction = new Hooker(publicKey, recipient, value, gasLimit, gasPrice, inputs.toArray(new HookerInput[inputs.size()]));
+        Hooker transaction = new Hooker(publicKey, recipient, value, gasLimit, gasPrice, new ArrayList<HookerInput>());
         transaction.generateSignature(privateKey);
 
         // Remove UTXOs that are spent

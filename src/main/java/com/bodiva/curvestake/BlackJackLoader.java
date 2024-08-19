@@ -1,5 +1,7 @@
 package com.bodiva.curvestake;
 
+import com.bodiva.curvestake.smartcontract.BlackJackContract;
+import com.bodiva.curvestake.blockchain.HookerReceipt;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;

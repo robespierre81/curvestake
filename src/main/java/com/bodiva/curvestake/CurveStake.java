@@ -1,5 +1,7 @@
 package com.bodiva.curvestake;
 
+import com.bodiva.curvestake.smartcontract.BlackJackContract;
+
 public class CurveStake {
 
     public static void main(String[] args) {

@@ -1,5 +1,6 @@
-package com.bodiva.curvestake;
+package com.bodiva.curvestake.consensus;
 
+import com.bodiva.curvestake.blockchain.Block;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -27,5 +28,9 @@ public class ProofOfStake {
             }
         }
         return null;
+    }
+
+    public boolean validateBlock(Block block) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

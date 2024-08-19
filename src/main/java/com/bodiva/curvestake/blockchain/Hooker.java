@@ -1,7 +1,14 @@
-package com.bodiva.curvestake;
+package com.bodiva.curvestake.blockchain;
 
+import com.bodiva.curvestake.ECCUtil;
+import com.bodiva.curvestake.StringUtil;
+import com.bodiva.curvestake.blockchain.HookerInput;
+import com.bodiva.curvestake.blockchain.HookerOutput;
+import com.bodiva.curvestake.blockchain.HookerReceipt;
+import com.bodiva.curvestake.smartcontract.BlackJackContract;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,21 +23,37 @@ public class Hooker {
     private float gasPrice; // Price per gas unit
     private int gasLimit; // Maximum amount of gas the sender is willing to pay
     private Map<String, HookerOutput> UTXOs = new HashMap<>(); // Unspent transaction outputs
+    private BlackJackContract smartContract; // Smart contract to interact with, if any
 
-    private HookerInput[] inputs; // Inputs to this transaction
-    private HookerOutput[] outputs; // Outputs to this transaction
+
+    private ArrayList<HookerInput> inputs; // Inputs to this transaction
+    private ArrayList<HookerOutput> outputs; // Outputs to this transaction
     private String function; // Function name for smart contract
     private String[] args; // Arguments for the function
 
     // Constructor
-    public Hooker(PublicKey sender, PublicKey recipient, float value, int gasLimit, float gasPrice, HookerInput[] inputs) {
+    public Hooker(PublicKey sender, PublicKey recipient, float value, int gasLimit, float gasPrice, ArrayList<HookerInput> inputs) {
         this.sender = sender;
         this.recipient = recipient;
         this.value = value;
         this.gasLimit = gasLimit;
         this.gasPrice = gasPrice;
         this.inputs = inputs;
-        this.outputs = new HookerOutput[1]; // Simplified for brevity
+        this.outputs = new ArrayList<HookerOutput>(); // Simplified for brevity
+    }
+    // Constructor
+    public Hooker(PublicKey sender, float value, int gasLimit, float gasPrice, ArrayList<HookerInput> inputs) {
+        this.sender = sender;
+        this.value = value;
+        this.gasLimit = gasLimit;
+        this.gasPrice = gasPrice;
+        this.inputs = inputs;
+        this.outputs = new ArrayList<HookerOutput>(); // Simplified for brevity
+    }
+    
+    public Hooker(PublicKey sender, BlackJackContract smartContract, float value, int gasLimit, float gasPrice, ArrayList<HookerInput> inputs) {
+        this(sender, value, gasLimit, gasPrice, inputs);
+        this.smartContract = smartContract;
     }
 
     // Generate the transaction's signature
@@ -47,7 +70,8 @@ public class Hooker {
 
     // Calculate the transaction's hash (ID)
     public String calculateHash() {
-        return StringUtil.applySha256(sender.toString() + recipient.toString() + Float.toString(value) + gasLimit + gasPrice + Arrays.toString(inputs));
+        //return StringUtil.applySha256(sender.toString() + recipient.toString() + Float.toString(value) + gasLimit + gasPrice + Arrays.toString(inputs));
+        return null;
     }
 
     // Calculate the total gas fee
@@ -57,6 +81,17 @@ public class Hooker {
     
     public int getGasLimit() {
         return gasLimit;
+    }
+    
+    // Returns the sum of the input values (UTXOs) used in this transaction
+    public float getInputsValue() {
+        float total = 0;
+        for (HookerInput input : inputs) {
+            if (input.getUTXO() != null) {
+                total += input.getUTXO().getValue();
+            }
+        }
+        return total;
     }
     
     public boolean processTransaction() {
@@ -71,7 +106,7 @@ public class Hooker {
         }
 
         // Ensure the transaction inputs are valid
-        if (getInputsValue() < value) {
+        if (this.getInputsValue() < value) {
             System.out.println("Transaction inputs are less than the value.");
             return false;
         }
@@ -79,11 +114,10 @@ public class Hooker {
         // Generate transaction outputs
         float leftover = getInputsValue() - value;
         transactionId = calculateHash();
-        outputs = new HookerOutput[]{
-                new HookerOutput(this.recipient, value, transactionId),
-                new HookerOutput(this.sender, leftover, transactionId)
-        };
-
+        outputs = new ArrayList<HookerOutput>();
+        outputs.add(new HookerOutput(this.recipient, value, transactionId));
+        outputs.add(new HookerOutput(this.sender, leftover, transactionId));
+        
         // Add outputs to the UTXO map
         for (HookerOutput output : outputs) {
             UTXOs.put(output.getId(), output);
@@ -98,25 +132,14 @@ public class Hooker {
 
         return true;
     }
-    
-    // Returns the sum of the input values (UTXOs) used in this transaction
-    public float getInputsValue() {
-        float total = 0;
-        for (HookerInput input : inputs) {
-            if (input.getUTXO() != null) {
-                total += input.getUTXO().getValue();
-            }
-        }
-        return total;
-    }
 
     // Get the inputs of the transaction
-    public HookerInput[] getInputs() {
+    public ArrayList<HookerInput> getInputs() {
         return inputs;
     }
 
     // Get the outputs of the transaction
-    public HookerOutput[] getOutputs() {
+    public ArrayList<HookerOutput> getOutputs() {
         return outputs;
     }
     
@@ -171,5 +194,13 @@ public class Hooker {
 
         HookerReceipt receipt = new HookerReceipt(hash, success);
         return CompletableFuture.completedFuture(receipt);
+    }
+
+    public boolean isSmartContractTransaction() {
+        return smartContract != null;
+    }
+    
+    public BlackJackContract getContract() {
+        return smartContract;
     }
 }

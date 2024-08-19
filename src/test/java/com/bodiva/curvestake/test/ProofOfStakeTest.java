@@ -1,9 +1,9 @@
 package com.bodiva.curvestake.test;
 
-import com.bodiva.curvestake.ProofOfStake;
-import com.bodiva.curvestake.ProofOfStake;
-import com.bodiva.curvestake.Stakeholder;
-import com.bodiva.curvestake.Stakeholder;
+import com.bodiva.curvestake.consensus.ProofOfStake;
+import com.bodiva.curvestake.consensus.ProofOfStake;
+import com.bodiva.curvestake.consensus.Stakeholder;
+import com.bodiva.curvestake.consensus.Stakeholder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

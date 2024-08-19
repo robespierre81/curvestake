@@ -1,5 +1,10 @@
-package com.bodiva.curvestake;
+package com.bodiva.curvestake.smartcontract;
 
+import com.bodiva.curvestake.Card;
+import com.bodiva.curvestake.Deck;
+import com.bodiva.curvestake.SmartContract;
+import com.bodiva.curvestake.blockchain.Hooker;
+import com.bodiva.curvestake.blockchain.HookerReceipt;
 import java.security.PublicKey;
 import java.util.*;
 import org.web3j.crypto.Credentials;

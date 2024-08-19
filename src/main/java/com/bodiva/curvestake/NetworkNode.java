@@ -1,5 +1,6 @@
 package com.bodiva.curvestake;
 
+import com.bodiva.curvestake.network.Message;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;

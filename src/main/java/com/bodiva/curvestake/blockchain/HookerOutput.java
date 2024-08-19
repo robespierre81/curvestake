@@ -1,5 +1,6 @@
-package com.bodiva.curvestake;
+package com.bodiva.curvestake.blockchain;
 
+import com.bodiva.curvestake.StringUtil;
 import java.security.PublicKey;
 
 public class HookerOutput {

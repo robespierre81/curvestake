@@ -1,4 +1,4 @@
-package com.bodiva.curvestake;
+package com.bodiva.curvestake.network;
 
 import org.json.JSONObject;
 

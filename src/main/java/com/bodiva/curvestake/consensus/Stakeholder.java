@@ -1,5 +1,6 @@
-package com.bodiva.curvestake;
+package com.bodiva.curvestake.consensus;
 
+import com.bodiva.curvestake.ECCUtil;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
