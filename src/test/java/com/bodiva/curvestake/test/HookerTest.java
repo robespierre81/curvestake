@@ -35,7 +35,7 @@ public class HookerTest {
         inputs = new HookerInput[]{
                 new HookerInput("previousTxOutputId1"),
                 new HookerInput("previousTxOutputId2")
-        };
+    };
 
         // Create a Hooker object for testing
         transaction = new Hooker(keyPair.getPublic(), keyPair.getPublic(), 10.0f, 21000, 0.0001f, inputs);
