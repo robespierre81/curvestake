@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Define the minimum and maximum number of executions per day
-MIN_EXEC_CURVESTAKE=3
-MAX_EXEC_CURVESTAKE=50
+MIN_EXEC_CURVESTAKE=30
+MAX_EXEC_CURVESTAKE=500
 
 # Calculate the probability of execution based on the schedule
 TOTAL_RUNS_CURVESTAKE=144 # Example: 144 cron runs per day (every 10 minutes)
